@@ -133,7 +133,7 @@ public class SMPPBankaiGroup {
 	 * Sets global SMPP library debug and event objects. Runs the application.
 	 * 
 	 * @see SmppObject#setDebug(Debug)
-	 * @see SmppObject#setEvent(Event)
+	 *
 	 */
 	public static boolean main(String args[]) {
 

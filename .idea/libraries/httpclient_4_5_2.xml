@@ -11,6 +11,15 @@
       <root url="jar://$PROJECT_DIR$/lib/fluent-hc-4.5.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-log4j12-1.7.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-jdk14-1.7.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/slf4j-api-1.7.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/opensmpp-sim-3.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/opensmpp-core-3.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/opensmpp-client-3.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/opensmpp-charset-3.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.15.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
