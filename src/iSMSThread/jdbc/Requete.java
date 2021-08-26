@@ -74,7 +74,7 @@ public class Requete {
 	 */
 	public boolean envoiReussi(Sms sms, boolean etat) {
 
-		String sql = "UPDATE Sms SET etat = " + etat + " WHERE idSMS = " + sms.getIdSMS() + ";";
+		String sql = "UPDATE Sms SET etat = " + etat + ", status='SENT' WHERE idSMS = " + sms.getIdSMS() + ";";
 
 		if (jdbc.executeUpdate(sql) > 0)
 			return true;
@@ -85,7 +85,7 @@ public class Requete {
 	
 	public boolean echecEnvoi(Sms sms, int code) {
 
-		String sql = "UPDATE Sms SET rstate = " + code + " WHERE idSMS = " + sms.getIdSMS() + ";";
+		String sql = "UPDATE Sms SET rstate = " + code + ", status='TRIED' WHERE idSMS = " + sms.getIdSMS() + ";";
 
 		if (jdbc.executeUpdate(sql) > 0)
 			return true;

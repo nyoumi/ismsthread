@@ -6,28 +6,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List; 
+import java.util.List;
 
 import iSMSThread.jdbc.Requete;
 import iSMSThread.jpa.entities.Sms;
-import iSMSThread.utils.APIGETSender;
-import iSMSThread.utils.APIGETSender2;
-import iSMSThread.utils.APIGETSender3;
-import iSMSThread.utils.SMPPBankaiGroup;
-import iSMSThread.utils.SMPPSender;
+import iSMSThread.utils.*;
 
 public class SMSThread extends Thread { 
-	private Requete req = new Requete();
+	private final Requete req = new Requete();
 
 	private int idClient;
 	private int mode;
 
 	private List<Sms> smsAEnvoyer = new ArrayList<Sms>();
-	private List<Thread> ThreadList = new ArrayList<Thread>();
-	private int intevalle=200;
+	private final int interval =200;
 	private int debut=0;
-	private int fin=intevalle; 
+	private int fin= interval;
 	private boolean flag=true;
 	private Long heure;
 	
@@ -56,175 +50,174 @@ public class SMSThread extends Thread {
 	public void run() {
 		System.out.println(this.getName() + " ==> active state\n");
 
-		while (true) { 
+		while (true) {
 		    if(flag){
 		    this.setSmsAEnvoyer(null);
 			try {
-		    	//System.out.println("Is good client  :"+this.idClient);  
+		    	//System.out.println("Is good client  :"+this.idClient);
 		    	debut=0;
-		    	fin=intevalle;
-		    this.setSmsAEnvoyer(this.listeSMS()); 
+		    	fin= interval;
+		    this.setSmsAEnvoyer(this.listeSMS());
 		    if(smsAEnvoyer!=null)
-		    if(smsAEnvoyer.size()<=intevalle){ 
-			for (int i = 0; i < smsAEnvoyer.size(); i++) {
-				//System.out.println("debut "+debut+" fin "+fin+" SMSs : "+i);
-				Sms sms = smsAEnvoyer.get(i);   
-					if(sms.getOperateur()==0){ 
-					this.envoyerSMS(sms);
-					if (sms.isEtat())
-						req.envoiReussi(sms, true); 
-					    System.out.println("\n" + sms.toString() + " SENT By NEXTTEL? ===> " + sms.isEtat());
-					}else if(sms.getOperateur()==4){ 
+		    if(smsAEnvoyer.size()<= interval){
+				for (Sms sms : smsAEnvoyer) {
+					//System.out.println("debut "+debut+" fin "+fin+" SMSs : "+i);
+					if (sms.getOperateur() == 0) {
+						this.envoyerSMS(sms);
+						if (sms.isEtat())
+							req.envoiReussi(sms, true);
+						System.out.println("\n" + sms.toString() + " SENT By NEXTTEL? ===> " + sms.isEtat());
+					} else if (sms.getOperateur() == 4) {
 						this.envoyerBGSMS(sms);
 						if (sms.isEtat())
-							req.envoiReussi(sms, true); 
-						    System.out.println("\n" + sms.toString() + " SENT By MTN ? ===> " + sms.isEtat());
-				    }else if(sms.getOperateur()==3){
-						if(APIGETSender3.envoyerSMS(sms)){
-							req.envoiReussi(sms, true); 
+							req.envoiReussi(sms, true);
+						System.out.println("\n" + sms.toString() + " SENT By MTN ? ===> " + sms.isEtat());
+					} else if (sms.getOperateur() == 3) {
+						if (APIGETSender3.envoyerSMS(sms)) {
+							req.envoiReussi(sms, true);
 							System.out.println("\n" + sms.toString() + " SENT BY sms.etech-keys.com ===> " + sms.isEtat());
-						}		
-					}else if(sms.getOperateur()==1){
-						if(APIGETSender2.envoyerSMS(sms)){
-							req.envoiReussi(sms, true); 
+						}
+					} else if (sms.getOperateur() == 1) {
+						if (APIGETSender2.envoyerSMS(sms)) {
+							req.envoiReussi(sms, true);
 							System.out.println("\n" + sms.toString() + " SENT BY cheapglobalsms? ===> " + sms.isEtat());
-						}		
-					}else if(sms.getOperateur()==2){
-						if(APIGETSender.envoyerSMS(sms)){
-							req.envoiReussi(sms, true); 
+						}
+					} else if (sms.getOperateur() == 2) {
+						if (APIGETSender.envoyerSMS(sms)) {
+							req.envoiReussi(sms, true);
 							System.out.println("\n" + sms.toString() + " SENT BY 1s2u? ===> " + sms.isEtat());
-						}		
-					}  
-			} 
-			
-		    }else{ 
+						}
+					}
+				}
+
+		    }else{
 		    	flag=false;
 		    	//System.out.println(" Ok envoi multiple");
 		    	heure=Calendar.getInstance().getTime().getTime();
-		    	int nber= smsAEnvoyer.size()/intevalle;
-		    	int reste= smsAEnvoyer.size()%intevalle; 
-		    	
+		    	int nber= smsAEnvoyer.size()/ interval;
+		    	int reste= smsAEnvoyer.size()% interval;
+
 		    	for(int j=0; j < nber; j++){
 		    		/*		    		System.out.println(smsAEnvoyer.subList(debut, fin));
 		    		System.out.println(j);
 		    		System.out.println("interval : ["+debut+" - "+(debut+5)+"]");*/
 		    		new Thread(){
 	    	        	  private int ldebut=debut;
-	    	        	  private int lFin=fin; 
-		    	          public void run() { 
-		    	  			for (int i = ldebut; i <lFin  ; i++) { 
+	    	        	  private int lFin=fin;
+		    	          public void run() {
+		    	  			for (int i = ldebut; i <lFin  ; i++) {
 		    	  				// System.out.println("debut "+ldebut+" fin "+lFin+" SMS : "+i);
-		    	  				
-		    					    Sms sms = smsAEnvoyer.get(i);   
-		    						if(sms.getOperateur()==0){ 
+
+		    					    Sms sms = smsAEnvoyer.get(i);
+		    						if(sms.getOperateur()==0){
 		    						envoyerSMS(sms);
 		    						if (sms.isEtat())
-		    							req.envoiReussi(sms, true); 
+		    							req.envoiReussi(sms, true);
 		    						    System.out.println("\n" + sms.toString() + " SENT By NEXTTEL? ===> " + sms.isEtat());
-		    						}else if(sms.getOperateur()==4){ 
+		    						}else if(sms.getOperateur()==4){
 		    							envoyerBGSMS(sms);
 		    							if (sms.isEtat())
-		    								req.envoiReussi(sms, true); 
-		    							    System.out.println("\n" + sms.toString() + " SENT By Bankai Group ? ===> " + sms.isEtat());
+		    								req.envoiReussi(sms, true);
+		    							    System.out.println("\n" + sms.toString() + " SENT By MTN ? ===> " + sms.isEtat());
 		    					    }else if(sms.getOperateur()==3){
 		    							boolean val;
 										try {
 											val = APIGETSender3.envoyerSMS(sms);
 			    							if(val){
-			    								req.envoiReussi(sms, true); 
+			    								req.envoiReussi(sms, true);
 			    								System.out.println("\n" + sms.toString() + " SENT BY sms.etech-keys.com ? ===> " + sms.isEtat());
 			    							}
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}		
+										}
 		    						}else if(sms.getOperateur()==1){
 		    							boolean val;
 										try {
 											val = APIGETSender2.envoyerSMS(sms);
 			    							if(val){
-			    								req.envoiReussi(sms, true); 
+			    								req.envoiReussi(sms, true);
 			    								System.out.println("\n" + sms.toString() + " SENT BY cheapglobalsms? ===> " + sms.isEtat());
 			    							}
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}		
+										}
 		    						}else if(sms.getOperateur()==2){
 		    							try {
 											if(APIGETSender.envoyerSMS(sms)){
-												req.envoiReussi(sms, true); 
+												req.envoiReussi(sms, true);
 												System.out.println("\n" + sms.toString() + " SENT BY 1s2u? ===> " + sms.isEtat());
 											}
 										} catch (IOException e) {
 											// TODO Auto-generated catch block
 											e.printStackTrace();
-										}		
+										}
 		    						}
-		    						if(flag) break; 
-		    				} 
-		    	  			
+		    						if(flag) break;
+		    				}
+
 		    	          }
-		    	      }.start(); 
+		    	      }.start();
 		    	      incrementBonnes();
-		    	     
-		    	} 
-		    	
-		    	if((smsAEnvoyer.size()%intevalle)>0){
+
+		    	}
+
+		    	if((smsAEnvoyer.size()% interval)>0){
 	    		new Thread(){
-   	        	 private int lDebut= smsAEnvoyer.size()-(smsAEnvoyer.size()%intevalle);
+   	        	 private int lDebut= smsAEnvoyer.size()-(smsAEnvoyer.size()% interval);
    	        	 private int lFin= smsAEnvoyer.size();
-	    	          public void run() {  
+	    	          public void run() {
 	    	  			for (int i = lDebut; i < lFin; i++) {
 	    	  				//System.out.println("debut "+lDebut+" fin "+lFin+" SMS : "+i);
-	    					Sms sms = smsAEnvoyer.get(i);   
-	    						if(sms.getOperateur()==0){ 
+	    					Sms sms = smsAEnvoyer.get(i);
+	    						if(sms.getOperateur()==0){
 	    						envoyerSMS(sms);
 	    						if (sms.isEtat())
-	    							req.envoiReussi(sms, true); 
+	    							req.envoiReussi(sms, true);
 	    						    System.out.println("\n" + sms.toString() + " SENT By NEXTTEL? ===> " + sms.isEtat());
-	    						}else if(sms.getOperateur()==4){ 
+	    						}else if(sms.getOperateur()==4){
 	    							envoyerBGSMS(sms);
 	    							if (sms.isEtat())
-	    								req.envoiReussi(sms, true); 
-	    							    System.out.println("\n" + sms.toString() + " SENT By Bankai Group ? ===> " + sms.isEtat());
+	    								req.envoiReussi(sms, true);
+	    							    System.out.println("\n" + sms.toString() + " SENT By MTN ? ===> " + sms.isEtat());
 	    					    }else if(sms.getOperateur()==3){
 	    							boolean val;
 									try {
 										val = APIGETSender3.envoyerSMS(sms);
 		    							if(val){
-		    								req.envoiReussi(sms, true); 
+		    								req.envoiReussi(sms, true);
 		    								System.out.println("\n" + sms.toString() + " SENT BY sms.etech-keys.com  ===> " + sms.isEtat());
 		    							}
 									} catch (IOException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
-									}		
+									}
 	    						}else if(sms.getOperateur()==1){
 	    							boolean val;
 									try {
 										val = APIGETSender2.envoyerSMS(sms);
 		    							if(val){
-		    								req.envoiReussi(sms, true); 
+		    								req.envoiReussi(sms, true);
 		    								System.out.println("\n" + sms.toString() + " SENT BY cheapglobalsms? ===> " + sms.isEtat());
 		    							}
 									} catch (IOException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
-									}		
+									}
 	    						}else if(sms.getOperateur()==2){
 	    							try {
 										if(APIGETSender.envoyerSMS(sms)){
-											req.envoiReussi(sms, true); 
+											req.envoiReussi(sms, true);
 											System.out.println("\n" + sms.toString() + " SENT BY 1s2u? ===> " + sms.isEtat());
 										}
 									} catch (IOException e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
-									}		
+									}
 	    						}
-	    						if(flag) break; 
-	    				}  
+	    						if(flag) break;
+	    				}
 	    	          }
 	    	      }.start();
 		    	}
@@ -232,9 +225,9 @@ public class SMSThread extends Thread {
 			}
 			} catch (Exception e) {
 				System.out.println("Exception "+e.getMessage());
-			} 
-			
-			
+			}
+
+
 			try {
 
 				System.out.println("\n" + this.getName() + " ===> sleeping state\n");
@@ -251,8 +244,8 @@ public class SMSThread extends Thread {
 		if((Calendar.getInstance().getTime().getTime()-heure)>160000){
 			//System.out.println(" Okkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkhhgghghghghghghghghghghghghghghghghghghghoiiooooooooooooooookkkkkkkk");
 			flag=true;
-			try { 
-				sleep(3000);   
+			try {
+				sleep(3000);
 			} catch (NullPointerException | InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -262,8 +255,8 @@ public class SMSThread extends Thread {
 	}
 	
 	public synchronized void incrementBonnes(){
-	      debut=debut+intevalle;
-	      fin=fin+intevalle; 
+	      debut=debut+ interval;
+	      fin=fin+ interval;
 /*	      System.out.println("debut : "+debut);
 	      System.out.println("fin : "+fin);*/
 	}
@@ -373,9 +366,9 @@ public class SMSThread extends Thread {
 		String sender = sms.getSender();
 		String destiniation = sms.getDestinataire();
 		String message = sms.getContenu();
-		Boolean envoye = false;
+		boolean envoye = false;
 
-		String params[] = { sender, destiniation, message };
+		String[] params = { sender, destiniation, message };
 
 		envoye = SMPPSender.main(params);
 		sms.setEtat(envoye);
@@ -387,12 +380,16 @@ public class SMSThread extends Thread {
 		String sender = sms.getSender();
 		String destiniation = sms.getDestinataire();
 		String message = sms.getContenu();
-		Boolean envoye = false;
+		boolean envoye = false;
 
-		String params[] = { sender, destiniation, message };
+		String[] params = { sender, destiniation, message };
 
-		envoye = SMPPBankaiGroup.main(params);
-	System.err.println("BG response ============================================ "+envoye);
+		try {
+			envoye = MtnSender4.envoyerSMS(sms);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.err.println("BG response ============================================ "+envoye);
 		sms.setEtat(envoye);
 
 	}
