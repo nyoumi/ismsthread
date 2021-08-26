@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><packages version="1.3">
+  <package exploded="false" inWorkspace="true" name="iSMSThread.jar" todir="/iSMSThread" type="jar">
+    <properties>
+      <property name="org.jboss.ide.eclipse.as.core.packages.ModuleIDPropertyKey" value="14799213054212171618249476190031483"/>
+    </properties>
+  </package>
+  <properties/>
+</packages>

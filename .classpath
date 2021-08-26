@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_121"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/mysql-connector-java-5.1.39-bin.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/opensmpp-charset-3.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/opensmpp-client-3.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/opensmpp-core-3.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/opensmpp-sim-3.0.0.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/slf4j-api-1.7.9.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/slf4j-api-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/slf4j-jdk14-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/iSMS/iSMS_libs/metier/slf4j-log4j12-1.7.21.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/fluent-hc-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/httpclient-cache-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/httpclient-win-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/jna-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/java soft/httpcomponents-client-4.5.2/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/PROJETS/download/org.json.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
