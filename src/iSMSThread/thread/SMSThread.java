@@ -274,7 +274,7 @@ public class SMSThread extends Thread {
 		ResultSet result=null;
 		List<Sms> smsAEnvoyer = new ArrayList<Sms>();
 		if(mode==2){
-		  result = req.listeSMSAEnvoyer(idClient, false);
+		  result = req.listeSMSAEnvoyer(idClient, false, "ATTENTE");
 		} else{
 			 result = req.listeSMSAEnvoyerByMode(false, 1);	
 		}

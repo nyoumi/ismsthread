@@ -20,6 +20,7 @@
       <root url="jar://$PROJECT_DIR$/lib/opensmpp-client-3.0.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/opensmpp-charset-3.0.0.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mysql-connector-java-5.1.39.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

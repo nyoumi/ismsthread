@@ -45,15 +45,14 @@ public class Requete {
 
 	//
 	/**
-	 * recupere la valeur du numero du conge d'un reparateur
-	 * 
+	 *
 	 * @param etat
 	 * @return Calendar.getInstance().getTime()
 	 */
-	public ResultSet listeSMSAEnvoyer(int idClient, boolean etat) {
+	public ResultSet listeSMSAEnvoyer(int idClient, boolean etat, String status) {
 
 		String sql = "SELECT idSms, sender, destinataire, contenu, operateur, mode, rstate FROM Sms WHERE etat = " + etat
-				+ " AND rstate = 0 AND Client_idClient = " + idClient + " AND NOW() >= dateEnvoi;";
+				+ " AND rstate = 0 AND Client_idClient = " + idClient + "AND status = " + status +" AND NOW() >= dateEnvoi;";
 
 		return jdbc.executeQuery(sql);
 	}

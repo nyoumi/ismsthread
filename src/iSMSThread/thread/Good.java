@@ -89,7 +89,7 @@ public class Good extends Thread {
 
 		List<Sms> smsAEnvoyer = new ArrayList<Sms>();
 
-		ResultSet result = req.listeSMSAEnvoyer(idClient, false);
+		ResultSet result = req.listeSMSAEnvoyer(idClient, false, "ATTENTE");
 
 		try {
 			if(result!=null)

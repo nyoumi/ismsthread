@@ -79,10 +79,7 @@ public class UtilClass {
 			          // connection immediately.
 			          httpget.abort();
 			          runtimeException.printStackTrace();
-			        } catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
+			        } finally {
 			          // Closing the input stream will trigger connection release
 			          try {
 			            inputStream.close();

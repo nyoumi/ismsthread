@@ -43,7 +43,7 @@ public class ISMSThead {
 		ISMSThead ismsthread=new ISMSThead();
 		try {
 			
-		    smsThreadAll = new SMSThread("SMS deamon for client : ", 0, 1);
+		    smsThreadAll = new SMSThread("SMS daemon for client : ", 0, 1);
 			smsThreadAll.start(); 
 			
 			ismsthread.setClients(ismsthread.listeClients()); 
