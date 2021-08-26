@@ -78,7 +78,7 @@ public class SMSThread extends Thread {
 						this.envoyerBGSMS(sms);
 						if (sms.isEtat())
 							req.envoiReussi(sms, true); 
-						    System.out.println("\n" + sms.toString() + " SENT By Bankai Group ? ===> " + sms.isEtat());
+						    System.out.println("\n" + sms.toString() + " SENT By MTN ? ===> " + sms.isEtat());
 				    }else if(sms.getOperateur()==3){
 						if(APIGETSender3.envoyerSMS(sms)){
 							req.envoiReussi(sms, true); 

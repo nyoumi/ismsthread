@@ -142,14 +142,9 @@ public class Good extends Thread {
 				//System.err.println(contenu);
 				smsAEnvoyer.add(sms);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-
-
-        } finally
+		} finally
 		{ 
 			 try { 
 			       result.close();
