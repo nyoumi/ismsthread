@@ -61,7 +61,26 @@ public class SMSThread extends Thread {
 		    if(smsAEnvoyer!=null)
 		    if(smsAEnvoyer.size()<= interval){
 				for (Sms sms : smsAEnvoyer) {
+					String[] prefixesMTN = new String[] {"+23767","23767"};
+					for (String prefixe:prefixesMTN
+						 ) {
+						if(sms.getDestinataire().startsWith(prefixe)){
+							this.envoyerBGSMS(sms);
+							if (sms.isEtat())
+								req.envoiReussi(sms, true);
+							System.out.println("\n" + sms.toString() + " SENT By MTN ? ===> " + sms.isEtat());
+						}else{
+							if (APIGETSender3.envoyerSMS(sms)) {
+								req.envoiReussi(sms, true);
+								System.out.println("\n" + sms.toString() + " SENT BY sms.etech-keys.com ===> " + sms.isEtat());
+							}
+						}
+
+					}
+
+
 					//System.out.println("debut "+debut+" fin "+fin+" SMSs : "+i);
+					/*
 					if (sms.getOperateur() == 0) {
 						this.envoyerSMS(sms);
 						if (sms.isEtat())
@@ -88,6 +107,7 @@ public class SMSThread extends Thread {
 							System.out.println("\n" + sms.toString() + " SENT BY 1s2u? ===> " + sms.isEtat());
 						}
 					}
+					*/
 				}
 
 		    }else{
@@ -283,24 +303,24 @@ public class SMSThread extends Thread {
 				Integer operateur=result.getInt("operateur");  
 				Integer mode=result.getInt("mode");  
 				contenu = contenu.replaceAll("[\r\n]+", " ");
-				contenu = contenu.replaceAll("[èéêë]","e");
-				contenu = contenu.replaceAll("[œ]","oe");
-				contenu = contenu.replaceAll("[Œ]","OE");
-				contenu = contenu.replaceAll("[àáâãäå]","a");
-				contenu = contenu.replaceAll("[òóôõöø]","o");
-				contenu = contenu.replaceAll("[ìíîï]","i");
-				contenu = contenu.replaceAll("[ùúûü]","u");
-				contenu = contenu.replaceAll("[ÿ]","y");
-				contenu = contenu.replaceAll("[ç]","c");
-				contenu = contenu.replaceAll("[Ç]","C");
-				contenu = contenu.replaceAll("[°]","-");
-				contenu = contenu.replaceAll("[Ñ]","N");
-				contenu = contenu.replaceAll("[ÙÚÛÜ]","U");
-				contenu = contenu.replaceAll("[ÌÍÎÏ]","I");
-				contenu = contenu.replaceAll("[ÈÉÊË]","E");
-				contenu = contenu.replaceAll("[ÒÓÔÕÖØ]","O");
-				contenu = contenu.replaceAll("[ÀÁÂÃÄÅ]","A");
-				contenu = contenu.replaceAll("[ÀÁÂÃÄÅ]","A");
+				contenu = contenu.replaceAll("[Ã¨Ã©ÃªÃ«]","e");
+				contenu = contenu.replaceAll("[Å“]","oe");
+				contenu = contenu.replaceAll("[Å’]","OE");
+				contenu = contenu.replaceAll("[Ã Ã¡Ã¢Ã£Ã¤Ã¥]","a");
+				contenu = contenu.replaceAll("[Ã²Ã³Ã´ÃµÃ¶Ã¸]","o");
+				contenu = contenu.replaceAll("[Ã¬Ã­Ã®Ã¯]","i");
+				contenu = contenu.replaceAll("[Ã¹ÃºÃ»Ã¼]","u");
+				contenu = contenu.replaceAll("[Ã¿]","y");
+				contenu = contenu.replaceAll("[Ã§]","c");
+				contenu = contenu.replaceAll("[Ã‡]","C");
+				contenu = contenu.replaceAll("[Â°]","-");
+				contenu = contenu.replaceAll("[Ã‘]","N");
+				contenu = contenu.replaceAll("[Ã™ÃšÃ›Ãœ]","U");
+				contenu = contenu.replaceAll("[ÃŒÃÃÃ]","I");
+				contenu = contenu.replaceAll("[ÃˆÃ‰ÃŠÃ‹]","E");
+				contenu = contenu.replaceAll("[Ã’Ã“Ã”Ã•Ã–Ã˜]","O");
+				contenu = contenu.replaceAll("[Ã€ÃÃ‚ÃƒÃ„Ã…]","A");
+				contenu = contenu.replaceAll("[Ã€ÃÃ‚ÃƒÃ„Ã…]","A");
 				contenu = contenu.replaceAll("\"","'");
 				contenu = contenu.replaceAll("\\u00a0","");
 				contenu = contenu.replaceAll("(?<=\\d) +(?=\\d)", "");
@@ -312,22 +332,22 @@ public class SMSThread extends Thread {
 				
 				
 				senderID = senderID.replaceAll("[\r\n]+", " ");
-				senderID = senderID.replaceAll("[èéêë]","e");
-				senderID = senderID.replaceAll("[àáâãäå]","a");
-				senderID = senderID.replaceAll("[òóôõöø]","o");
-				senderID = senderID.replaceAll("[ìíîï]","i");
-				senderID = senderID.replaceAll("[ùúûü]","u");
-				senderID = senderID.replaceAll("[ÿ]","y");
-				senderID = senderID.replaceAll("[ç]","c");
-				senderID = senderID.replaceAll("[Ç]","C");
-				senderID = senderID.replaceAll("[°]","-");
-				senderID = senderID.replaceAll("[Ñ]","N");
-				senderID = senderID.replaceAll("[ÙÚÛÜ]","U");
-				senderID = senderID.replaceAll("[ÌÍÎÏ]","I");
-				senderID = senderID.replaceAll("[ÈÉÊË]","E");
-				senderID = senderID.replaceAll("[ÒÓÔÕÖØ]","O");
-				senderID = senderID.replaceAll("[ÀÁÂÃÄÅ]","A");
-				senderID = senderID.replaceAll("[ÀÁÂÃÄÅ]","A");
+				senderID = senderID.replaceAll("[Ã¨Ã©ÃªÃ«]","e");
+				senderID = senderID.replaceAll("[Ã Ã¡Ã¢Ã£Ã¤Ã¥]","a");
+				senderID = senderID.replaceAll("[Ã²Ã³Ã´ÃµÃ¶Ã¸]","o");
+				senderID = senderID.replaceAll("[Ã¬Ã­Ã®Ã¯]","i");
+				senderID = senderID.replaceAll("[Ã¹ÃºÃ»Ã¼]","u");
+				senderID = senderID.replaceAll("[Ã¿]","y");
+				senderID = senderID.replaceAll("[Ã§]","c");
+				senderID = senderID.replaceAll("[Ã‡]","C");
+				senderID = senderID.replaceAll("[Â°]","-");
+				senderID = senderID.replaceAll("[Ã‘]","N");
+				senderID = senderID.replaceAll("[Ã™ÃšÃ›Ãœ]","U");
+				senderID = senderID.replaceAll("[ÃŒÃÃÃ]","I");
+				senderID = senderID.replaceAll("[ÃˆÃ‰ÃŠÃ‹]","E");
+				senderID = senderID.replaceAll("[Ã’Ã“Ã”Ã•Ã–Ã˜]","O");
+				senderID = senderID.replaceAll("[Ã€ÃÃ‚ÃƒÃ„Ã…]","A");
+				senderID = senderID.replaceAll("[Ã€ÃÃ‚ÃƒÃ„Ã…]","A");
 				senderID = senderID.replaceAll("\"","'");
 				senderID = senderID.replaceAll("\\u00a0","");
 				senderID = senderID.replaceAll("(?<=\\d) +(?=\\d)", "");
